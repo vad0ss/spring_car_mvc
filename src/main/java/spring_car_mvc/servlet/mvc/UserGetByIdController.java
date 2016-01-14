@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import spring_car_mvc.database.DBException;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -29,7 +30,7 @@ public class UserGetByIdController implements MVCController {
         Long id = Long.valueOf(sid);
         try {
             User user = userDAO.getById(id);
-            username = user.getUserName();
+
             if (user.getUserId() == id) {
                 return new MVCModel(user, "/usersById.jsp");
             } else {

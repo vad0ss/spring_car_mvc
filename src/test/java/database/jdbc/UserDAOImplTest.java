@@ -28,4 +28,17 @@ public class UserDAOImplTest {
         assertEquals(password,"test");
 
     }
+
+    @Test
+    public void getByUserNameTest() throws DBException {
+        UserDAOImpl userDAOImpl = new UserDAOImpl();
+        User user = userDAOImpl.getById(Long.valueOf(1));
+
+        String username = user.getUserName();
+        String password = user.getPassword();
+
+        assertEquals(username,"test");
+        assertEquals(password,"test");
+
+    }
 }

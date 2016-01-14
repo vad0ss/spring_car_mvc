@@ -15,9 +15,17 @@
     <body>
         <h1>Index Page</h1>
         <br />
-        <form name="usr" method="get" action="usr">
-            <input type="text" id="UserID" name="UserID" value="" />
-            <input type="submit" />
-        </form>
+     <%
+         User user = (User)request.getAttribute("model");
+         if(user == null)
+         {
+             response.sendRedirect("login.jsp");
+         }
+         else
+         {
+             response.sendRedirect("userById.jsp?UserID=" + user.getUserId());
+         }
+
+     %>
     </body>
 </html>

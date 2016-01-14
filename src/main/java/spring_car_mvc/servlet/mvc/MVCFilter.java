@@ -29,6 +29,11 @@ public class MVCFilter implements Filter {
             logger.log(Level.INFO, "Spring context failed to start", e);
         }
 
+        controllers.put("/addevent", getBean(AddEventController.class));
+        controllers.put("/modifyevent", getBean(ModifyEventController.class));
+        controllers.put("/eventuserlist", getBean(UserEventListController.class));
+        controllers.put("/deleteEvent", getBean(DeleteEventController.class));
+        controllers.put("/login", getBean(AuthorizationController.class));
         controllers.put("/usr", getBean(UserGetByIdController.class));
 
     }

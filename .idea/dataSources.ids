@@ -7,6 +7,15 @@
     </database-info>
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="monaco_v2"/>
+    <table name="events" schema="" catalog="monaco_v2" type="TABLE">
+      <column name="event_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="event_name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="latitude" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="longitude" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="event_id"/>
+      <index name="unique_event_id" unique="true" columns="event_id"/>
+    </table>
     <table name="user" schema="" catalog="monaco_v2" type="TABLE">
       <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
       <column name="username" sqlType="VARCHAR" precision="90" scale="0" nullable="false" jdbcType="12"/>
