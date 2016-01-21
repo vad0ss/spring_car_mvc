@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -34,7 +35,7 @@ public class MVCFilter implements Filter {
         controllers.put("/eventuserlist", getBean(UserEventListController.class));
         controllers.put("/deleteEvent", getBean(DeleteEventController.class));
         controllers.put("/login", getBean(AuthorizationController.class));
-        controllers.put("/usr", getBean(UserGetByIdController.class));
+        controllers.put("/usr", getBean(UserPage.class));
 
     }
 
@@ -52,7 +53,12 @@ public class MVCFilter implements Filter {
         String contextURI = req.getServletPath();
         MVCController controller = controllers.get(contextURI);
         if (controller != null) {
-            MVCModel model = controller.processRequest(req);
+            MVCModel model = null;
+            try {
+                model = controller.processRequest(req);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             req.setAttribute("model", model.getData());
 

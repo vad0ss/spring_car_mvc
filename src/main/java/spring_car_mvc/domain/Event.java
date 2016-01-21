@@ -1,5 +1,7 @@
 package spring_car_mvc.domain;
 
+import java.util.Date;
+
 /**
  * Created by Dell on 09.01.2016.
  */
@@ -9,6 +11,15 @@ public class Event {
     private long userId;
     private float latitude;
     private float longitude;
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public float getLongitude() {
         return longitude;

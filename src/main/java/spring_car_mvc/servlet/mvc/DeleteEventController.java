@@ -5,11 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import spring_car_mvc.database.DBException;
 import spring_car_mvc.database.jdbc.EventDAOImpl;
-import spring_car_mvc.domain.Event;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dell on 11.01.2016.

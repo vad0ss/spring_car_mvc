@@ -3,9 +3,11 @@ package spring_car_mvc.database.jdbc;
 import org.springframework.stereotype.Component;
 import spring_car_mvc.database.DBException;
 import spring_car_mvc.database.EventDAO;
+import spring_car_mvc.database.jdbc.DAOImpl;
 import spring_car_mvc.domain.Event;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -24,14 +26,16 @@ public class EventDAOImpl extends DAOImpl implements EventDAO {
              String query = " insert into events (event_name," +
                      "user_id," +
                      "latitude," +
-                     "longitude)"
-                     + " values (?,?,?,?)";
+                     "longitude, " +
+                     "date)"
+                     + " values (?,?,?,?,?)";
             PreparedStatement preparedStatement = connection
                     .prepareStatement(query);
              preparedStatement.setString(1,event.getEventName());
              preparedStatement.setLong(2,event.getUserId());
              preparedStatement.setFloat(3,event.getLatitude());
              preparedStatement.setFloat(4,event.getLongitude());
+             preparedStatement.setDate(5, (Date) event.getDate());
              preparedStatement.execute();
         } catch (Throwable e) {
             System.out.println("Exception while executing Create Event");
@@ -97,6 +101,35 @@ public class EventDAOImpl extends DAOImpl implements EventDAO {
 
     }
 
+    public List<Event> getListEvent() throws DBException {
+        Event event = null;
+
+        connection = getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection
+                    .prepareStatement("select * from events");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Event> events = new ArrayList<Event>();
+            while(resultSet.next()) {
+                event = new Event();
+                event.setEventId(resultSet.getInt("event_id"));
+                event.setEventName(resultSet.getString("event_name"));
+                event.setLatitude(resultSet.getFloat("latitude"));
+                event.setLongitude(resultSet.getFloat("longitude"));
+                events.add(event);
+            }
+            return events;
+        } catch (Throwable e) {
+            System.out.println("Exception while executing list Event");
+            e.printStackTrace();
+            throw new DBException(e);
+        } finally {
+            closeConnection(connection);
+        }
+
+    }
+
     public void deleteEventById(int event_Id) throws DBException {
         try {
             connection = getConnection();
@@ -117,9 +150,15 @@ public class EventDAOImpl extends DAOImpl implements EventDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update events set event_name = ? where event_id = ?");
+                    .prepareStatement("update events " +
+                            "set event_name  = ?, " +
+                            "latitude = ?, " +
+                            "longitude = ? " +
+                            "where event_id = ?");
             preparedStatement.setString(1, event.getEventName());
-            preparedStatement.setInt(2, event_Id);
+            preparedStatement.setFloat(2, event.getLatitude());
+            preparedStatement.setFloat(3, event.getLongitude());
+            preparedStatement.setInt(4, event_Id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while executing modify Event");

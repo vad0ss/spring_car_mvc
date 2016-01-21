@@ -12,6 +12,7 @@ public interface EventDAO {
     void createEvent(Event event) throws DBException;
     Event getById(int eventID) throws DBException;
     List<Event> getListEventByUserId(long userId) throws DBException;
+    List<Event> getListEvent() throws DBException;
     void deleteEventById(int event_id) throws DBException;
     void modifyEvent(Event event, int event_Id) throws DBException;
 

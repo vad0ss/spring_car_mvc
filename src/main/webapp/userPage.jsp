@@ -10,9 +10,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  User user = (User)session.getAttribute("user");
+  List<Event> events = (ArrayList)request.getAttribute("model");
+%>
 <html>
 <head>
-  <title>User Event List</title>
+    <title>User <%=user.getUserName()%></title>
   <style type="text/css">
     #map {
       width: 450px;
@@ -22,14 +26,17 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <body>
-<%
-  User user = (User)session.getAttribute("user");
-  List<Event> events = (ArrayList)request.getAttribute("model");
-%>
+<h1>User your were looking for is found:</h1>
+  Welcome User <strong><%=user.getUserName()%></strong>
+<br />
+   <a href="addEvent.jsp?UserID=<%=user.getUserId()%>">Add Event</a>
+   <a href="eventuserlist?UserID=<%=user.getUserId()%>">User Event list</a>
+<br />
+<br />
 Events:
 <ul>
   <table cellpadding="0" cellspacing="0">
-  <% for(int eventCount = 0; eventCount < events.size(); eventCount++) { %>
+    <% for(int eventCount = 0; eventCount < events.size(); eventCount++) { %>
     <tr>
       <td>
         <li>
@@ -42,17 +49,16 @@ Events:
       </td>
       <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>
-         <a href="deleteEvent?eventID=<%=events.get(eventCount).getEventId()%>">
-           Delete Event
-         </a>
+        <a href="deleteEvent?eventID=<%=events.get(eventCount).getEventId()%>">
+          Delete Event
+        </a>
         </li>
       </td>
     </tr>
-   <%  } %>
+    <%  } %>
   </table>
 </ul>
-<a href="addEvent.jsp?UserID=<%=user.getUserId()%>">Add Event</a>
-<br />
+
 <div id="map"></div>
 <script type="text/javascript">
 
@@ -87,6 +93,5 @@ Events:
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUpMRaMT_QeweKFcoI59XGpstCWF8qfIQ&callback=initMap">
 </script>
 <% session.setAttribute("user",user); %>
-<a href="userPage.jsp?UserID=<%=user.getUserId() %>">Back to User</a>
 </body>
 </html>

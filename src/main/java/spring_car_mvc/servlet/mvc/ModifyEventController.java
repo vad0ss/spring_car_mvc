@@ -23,11 +23,17 @@ public class ModifyEventController implements MVCController {
         Event event = new Event();
         int eventId = Integer.valueOf(req.getParameter("eventID"));
         if(req.getParameter("eventName") != null) {
+            float latitude = Float.valueOf(req.getParameter("latitude"));
+            float longitude = Float.valueOf(req.getParameter("longitude"));
             event.setEventName(req.getParameter("eventName"));
+            event.setLatitude(latitude);
+            event.setLongitude(longitude);
         }
         else {
             try {
                 event.setEventName(eventDAO.getById(eventId).getEventName());
+                event.setLatitude(eventDAO.getById(eventId).getLatitude());
+                event.setLongitude(eventDAO.getById(eventId).getLongitude());
             } catch (DBException e) {
                 e.printStackTrace();
             }

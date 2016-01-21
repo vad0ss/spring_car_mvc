@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Controller
-@RequestMapping("/login.jsp")
+@RequestMapping("/")
 public class AuthorizationController implements MVCController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class AuthorizationController implements MVCController {
             if(user == null) return new MVCModel(null, "/login.jsp");
 
             if (user.getPassword().equals(password)) {
-                return new MVCModel(user, "/usersById.jsp");
+                return new MVCModel(user, "/index.jsp");
             } else {
                 return new MVCModel(null, "/login.jsp");
             }

@@ -1,5 +1,4 @@
 <%@ page import="spring_car_mvc.domain.User" %>
-<%@ page import="spring_car_mvc.database.jdbc.UserDAOImpl" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,7 +22,8 @@
          }
          else
          {
-             response.sendRedirect("userById.jsp?UserID=" + user.getUserId());
+             session.setAttribute("user",user);
+             response.sendRedirect("usr?UserID=" + user.getUserId());
          }
 
      %>
